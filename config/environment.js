@@ -1,5 +1,8 @@
 /* jshint node: true */
 
+//  ember server --live-reload=false
+
+
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'seekbar',
