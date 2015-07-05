@@ -13,7 +13,7 @@ export default Ember.Component.extend({
   tryMe : function () {
     // body...
   }.property('this')
-  
+
 
 
 });
