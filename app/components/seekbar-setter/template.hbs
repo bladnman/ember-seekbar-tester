@@ -1,9 +1,35 @@
 
 <div class="my-seekbar">
   <div class="seekbar_area">
-    <div class="sb_bar_part sb_duration">
-        <div class="sb_bar_part sb_active"></div
-        ><div class="sb_bar_part sb_playhead"></div>
+    <div class="sb_duration"></div>
+    <div class="sb_active" style="{{{activeStyle}}}"></div>
+    <div class="sb_playhead" style="{{{playheadStyle}}}"></div>
+  </div>
+</div>
+
+
+<div class="sb_tests">
+  <div class="sb_test_duration">
+    <div class="test_link" {{action 'setValue' 'duration' 60}}>dur-60</div>
+  </div>
+
+
+  <div class="sb_test_end">
+    <div class="test_link" {{action 'setValue' 'endOffset' 20}}>end-20</div>
+  </div>
+
+  <div class="sb_test_many">
+    <div class="test_link" {{action 'setValues' 'endOffset:20;duration:60;'}}>dur:60,end:20</div>
+    <div class="test_link" {{action 'setValues' 'startOffset:10;endOffset:40;duration:60;currentOffset:25'}}>startOffset:10;endOffset:40;duration:60;currentOffset:25</div>
+
+    <div class="sb_test">
+      <div class="sb-slider-label">
+        Start / End offsets
+      </div>
+      <div class="sb-slider-area sb-duration-slider">
+        {{range-slider start=sliderStartEndStart range=sliderStartEndRange change="sliderStartEndValueChanged"}}
+      </div>
     </div>
+
   </div>
 </div>
