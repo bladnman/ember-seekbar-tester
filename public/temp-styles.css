@@ -1,11 +1,13 @@
-body {
-  font-size: 22px;
+
+.seekbar-test-area {
+  margin: 35px;
 }
 .my-seekbar {
   position: relative;
-  width: 350px;
+  width: 300px;
   height: 18px;
   border: 1px solid lightblue;
+  margin-bottom: 15px;
 }
 
 /* SEEKBAR RULES  */
@@ -49,10 +51,34 @@ body {
 }
 .sb-slider-label {
   display: inline-block;
-  padding-right: 20px;
+  width: 155px;
   font-size: 15px;
+  height: 1.8em;
+  margin-left: 15px;
 }
 .sb-slider-area {
   display: inline-block;
   width: 300px;
 }
+
+
+
+.checkbutton {}
+
+.checkbutton:not(.true):before {
+  content:'';
+  display: inline-block;
+  padding-left: 16px;
+}
+.checkbutton.true:before {
+    /*Add another block-level blank space*/
+    content: '\2714';
+    display: inline-block;
+
+    /*Make it a small rectangle so the border will create an L-shape*/
+    width: 16px;
+    height: 13px;
+
+    text-align: left;
+}
+.checkbutton.true {}

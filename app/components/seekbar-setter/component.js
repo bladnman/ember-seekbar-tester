@@ -3,23 +3,11 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   // API
   startOffset : 15,
-  currentOffset : 30,
+  currentOffset : 0,
   endOffset : 45,
   duration : 60,
 
-
-  sliderStartEndRange : function () {
-    return {
-    		'min': [ 0 ],
-    		'max': [ 100 ]
-    	};
-  }.property(),
-  sliderStartEndStart : function () {
-
-    var soffPerc = this.get('startOffset') / this.get('duration');
-    var eoffPerc = this.get('endOffset') / this.get('duration');
-    return [soffPerc*100, eoffPerc*100];
-  }.property(),
+  isLive : false,
 
   activeStyle : function () {
     var outString = '';
@@ -27,11 +15,15 @@ export default Ember.Component.extend({
     var endOffset = this.get('endOffset');
     var duration = this.get('duration');
 
+    var startPerc = this.percentFloat(startOffset, duration)*100;
+    var endPerc = this.percentFloat(endOffset, duration)*100;
+    endPerc = endPerc - startPerc
+
     // START
-    outString += 'left:'+ this.percentFloat(startOffset, duration)*100 +'%;';
+    outString += 'left:'+ startPerc +'%;';
 
     // END
-    outString += 'width:'+ this.percentFloat(endOffset, duration)*100 +'%;';
+    outString += 'width:'+ endPerc +'%;';
 
     return outString;
   }.property('endOffset,startOffset,duration'),
@@ -53,10 +45,25 @@ export default Ember.Component.extend({
     return Math.max(Math.min(part/whole, 1.0), 0.0);
   },
 
-  handleValues : function () {
-    return [10,20,30];
-  }.property('endOffset,startOffset,duration,currentOffset,duration'),
 
+
+
+  // S U P P O R T I N G   T E S T S
+  sliderCurrentOffsetPercent : function () {
+    return 34.0;
+  }.property(),
+  sliderStartEndRange : function () {
+    return {
+    		'min': [ 0 ],
+    		'max': [ 100 ]
+    	};
+  }.property(),
+  sliderStartEndStart : function () {
+
+    var soffPerc = this.get('startOffset') / this.get('duration');
+    var eoffPerc = this.get('endOffset') / this.get('duration');
+    return [soffPerc*100, eoffPerc*100];
+  }.property(),
   actions : {
     setValue : function (key, value) {
       this.set(key, value);
@@ -73,22 +80,25 @@ export default Ember.Component.extend({
       }
     },
     sliderStartEndValueChanged:function(v) {
-
       var start = v[0] * 1;
       var end = v[1] * 1;
-
-      console.log('start', start);
-      console.log('end', end);
-
       var duration = this.get('duration');
 
       this.set('startOffset', duration * (start/100));
       this.set('endOffset', duration * (end/100));
+    },
+    sliderCurrentValueChanged:function(v) {
+      var position = v;
+      var duration = this.get('duration');
 
+      this.set('currentOffset', duration * (position/100));
+      console.log(this.get('currentOffset'));
 
-      console.log('startOffset', this.get('startOffset'));
-      console.log('endOffset', this.get('endOffset'));
-
+    },
+    toggleValue : function (key) {
+      var isTrue = !!this.get(key);
+      this.set(key, ! isTrue);
+      return true;
     }
   }
 });
